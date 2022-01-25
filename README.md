@@ -15,14 +15,23 @@ docker run -p 1234:1234 -d software_containerization_docker
 docker run -e PORT=<port> -p <port>:<port> -d software_containerization_docker
 
 GET call
+
 ```curl -i http://localhost:/```
+
 GET with ID call 
+
 ```curl -i http://localhost:<1234>/<id_number>```
+
 POST call
+
 ```curl -i -X POST http://localhost:<1234>```
+
 PUT call
+
 ```curl -i -X PUT http://localhost:<1234>```
+
 DELETE call
+
 ```curl -i -X DELETE http://localhost:<1234>```
 
 # To update the docker settings or server.js code do:
