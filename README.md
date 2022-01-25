@@ -1,5 +1,36 @@
 # Software Containerization
 
+## Docker + REST API setup
+
+# Give the right permissions to docker to set up
+sudo setfacl --modify user:<your_username>:rw /var/run/docker.sock
+
+# Build the docker
+docker build -t software_containerization_docker .
+
+# Run the docker, which starts with 1234 as default port which is hardcoded in Dockerfile and server.js
+docker run -p 1234:1234 -d software_containerization_docker
+
+# Run the docker with a custom <port> of choice 
+docker run -e PORT=<port> -p <port>:<port> -d software_containerization_docker
+
+curl -i http://localhost:/
+curl -i http://localhost:<1234>/<id_number>
+curl -i -X POST http://localhost:<1234>
+curl -i -X PUT http://localhost:<1234>
+curl -i -X DELETE http://localhost:<1234>
+
+# To update the docker settings or server.js code do:
+
+docker ps
+
+find the container id you want to stop
+
+docker stop <container_id>
+
+or if you want to stop all docker containers
+
+docker stop $(docker ps -a -q)
 
 
 ## Getting started
