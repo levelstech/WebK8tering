@@ -1,14 +1,12 @@
 FROM node:12-alpine
 
-ENV PORT=4000
-
 WORKDIR /usr/src/app
 
-# Install dependencies
+ENV PORT=1234
+
 COPY package.json /usr/src/app/
 RUN npm install
 
-# Copy source
 COPY server.js /usr/src/app
 
 EXPOSE $PORT
