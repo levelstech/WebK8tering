@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: api-container
-          image: localhost:32000/node_api:v5
+          image: localhost:32000/node_api:v1
           ports:
             - containerPort: 5000
           env:

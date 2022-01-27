@@ -4,13 +4,11 @@ var express = require('express');
 var mariadb = require('mariadb');
 
 const pool = mariadb.createConnection({
-   // host: process.env.MARIADB_SERVICE_PORT_8306_TCP_ADDR,
-   host: "10.152.183.198",
-   database: 'mariadb',
-   user: 'mariaadmin',
-   password: 'admin123',
-   // port: process.env.MARIADB_SERVICE_SERVICE_PORT
-   port: 8306
+   host: process.env.MARIADB_SERVICE_PORT_8306_TCP_ADDR,
+   database: process.env.MARIADB_DATABASE,
+   user: process.env.MARIADB_USER,
+   password: process.env.MYSQL_PASSWORD,
+   port: process.env.MARIADB_SERVICE_SERVICE_PORT
 })
 
 var app = express();
