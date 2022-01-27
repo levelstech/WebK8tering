@@ -12,7 +12,7 @@
 ```docker run -p 5000:5000 -d software_containerization_docker```
 
 # Run the docker with a custom <port> of choice 
-docker run -e PORT=<port> -p <port>:<port> -d software_containerization_docker
+```docker run -e PORT=<port> -p <port>:<port> -d software_containerization_docker```
 
 GET call
 
