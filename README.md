@@ -3,13 +3,13 @@
 ## Docker + REST API setup
 
 # Give the right permissions to docker to set up
-sudo setfacl --modify user:<your_username>:rw /var/run/docker.sock
+```sudo setfacl --modify user:<your_username>:rw /var/run/docker.sock```
 
 # Build the docker
 ```docker build -t software_containerization_docker .```
 
 # Run the docker, which starts with 5000 as default port which is hardcoded in Dockerfile and server.js
-docker run -p 5000:5000 -d software_containerization_docker
+```docker run -p 5000:5000 -d software_containerization_docker```
 
 # Run the docker with a custom <port> of choice 
 docker run -e PORT=<port> -p <port>:<port> -d software_containerization_docker
