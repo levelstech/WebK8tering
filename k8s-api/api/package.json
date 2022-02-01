@@ -7,10 +7,15 @@
   "license": "MIT",
   "repository": "https://gitlab.com/ReadyRectionz/software-containerization.git",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.cjs"
   },
   "dependencies": {
+    "axios": "^0.24.0",
+    "cors": "^2.8.5",
+    "dotenv": "^15.0.0",
     "express": "latest",
-    "mariadb": "latest"
-  }
+    "mariadb": "latest",
+    "socket.io": "^4.4.1"
+  },
+  "type": "module"
 }
