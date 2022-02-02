@@ -18,10 +18,11 @@ database:
 
 restapi:
   namespace: restapi
-  replicaCount: 1
+  replicaCount: 3
   nodejs:
     image: localhost:32000/node_api:v1
     name: nodejs
+    hostname: node-api.com
     port: 5000
     clusterPort: 8081
 
@@ -31,6 +32,7 @@ ui:
   react:
     image: localhost:32000/react-ui:v1
     name: react
+    hostname: react-ui.com
     port: 80
     clusterPort: 8080
 
