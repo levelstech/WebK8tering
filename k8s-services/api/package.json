@@ -1,16 +1,21 @@
 {
-  "name": "nodejs-rest-api-example",
+  "name": "software_containerization",
   "version": "1.0.0",
-  "description": "Example of Node.js REST API on Docker",
-  "author": "Petteri Kivimäki <dinky_jackson@hotmail.com.com>",
+  "description": "Software Containerization Project",
+  "author": "Ghasem Gholi, Leroy Velzel",
   "main": "server.js",
   "license": "MIT",
-  "repository": "https://github.com/petkivim/nodejs-rest-api-example.git",
+  "repository": "https://gitlab.com/ReadyRectionz/software-containerization.git",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.cjs"
   },
   "dependencies": {
-    "express": "^4.17.2",
-    "mariadb": "^2.5.5"
-  }
+    "axios": "^0.24.0",
+    "cors": "^2.8.5",
+    "dotenv": "^15.0.0",
+    "express": "latest",
+    "mariadb": "latest",
+    "socket.io": "^4.4.1"
+  },
+  "type": "module"
 }
