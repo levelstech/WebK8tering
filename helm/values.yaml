@@ -25,7 +25,14 @@ restapi:
     port: 5000
     clusterPort: 8081
 
-
+ui:
+  namespace: ui
+  replicaCount: 3
+  react:
+    image: localhost:32000/react-ui:v1
+    name: react
+    port: 80
+    clusterPort: 8080
 
 
 replicaCount: 1
