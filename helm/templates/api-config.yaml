@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.restapi.nodejs.name }}-config
+  namespace: {{ .Values.restapi.namespace }}
+  labels:
+    app: mariadb
+data:
+  MARIADB_DATABASE: {{ .Values.database.mariadb.databaseName }}
+  MARIADB_USER: {{ .Values.database.mariadb.username }}

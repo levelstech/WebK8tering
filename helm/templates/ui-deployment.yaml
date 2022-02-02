@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  {{ .Values.ui.react.name }}-deployment
+  namespace: {{ .Values.ui.namespace}}
+  labels:
+    app:  ui
+spec:
+  replicas: {{ .Values.ui.replicaCount }}
+  selector:
+    matchLabels:
+      app: ui
+  template:
+    metadata:
+      labels:
+        app:  ui
+    spec:
+      containers:
+      - name:  {{ .Values.ui.react.name }}-container
+        image:  {{ .Values.ui.react.image }}
+        ports:
+        - containerPort:  {{ .Values.ui.react.port }}

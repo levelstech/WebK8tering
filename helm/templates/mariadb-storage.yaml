@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Values.database.mariadb.name }}-pv-volume-database
+  labels:
+    type: local
+    app: mariadb
+spec:
+  storageClassName: microk8s-hostpath
+  claimRef:
+    name: {{ .Values.database.mariadb.name }}-pv-claim
+    namespace: {{ .Values.database.namespace }}
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/opt/mariadb/data"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.database.mariadb.name }}-pv-claim
+  namespace: {{ .Values.database.namespace }}
+  labels:
+    app: mariadb
+spec:
+  storageClassName: microk8s-hostpath
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  ui-deployment
+  namespace: default
+  labels:
+    app:  ui
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ui
+  template:
+    metadata:
+      labels:
+        app:  ui
+    spec:
+      containers:
+      - name:  ui-container
+        image:  localhost:32000/react-ui:v1
+        ports:
+        - containerPort:  80
