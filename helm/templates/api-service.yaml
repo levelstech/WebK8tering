@@ -3,6 +3,9 @@ kind: Service
 metadata:
   name: {{ .Values.restapi.nodejs.name }}-service
   namespace: {{ .Values.restapi.namespace }}
+  labels:
+    app: {{ .Values.restapi.appLabel }}
+    type: service 
 spec:
   type: ClusterIP
   ports:
@@ -10,4 +13,4 @@ spec:
     port: {{ .Values.restapi.nodejs.clusterPort }}
     targetPort: {{ .Values.restapi.nodejs.port }}
   selector:
-    app: api
+    app: {{ .Values.restapi.appLabel }}

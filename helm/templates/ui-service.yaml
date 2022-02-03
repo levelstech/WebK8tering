@@ -3,6 +3,9 @@ kind: Service
 metadata:
   name: {{ .Values.ui.react.name }}-service
   namespace: {{ .Values.ui.namespace }}
+  labels:
+    app: {{ .Values.ui.appLabel }}
+    type: service
 spec:
   type: ClusterIP
   ports:
@@ -10,4 +13,4 @@ spec:
     port: {{ .Values.ui.react.clusterPort }}
     targetPort: {{ .Values.ui.react.port }}
   selector:
-    app: ui
+    app: {{ .Values.ui.appLabel }}

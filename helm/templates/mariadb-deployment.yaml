@@ -3,15 +3,19 @@ kind: Deployment
 metadata:
   name: {{ .Values.database.mariadb.name }}-deployment
   namespace: {{ .Values.database.namespace }}
+  labels:
+    app: {{ .Values.database.appLabel }}
+    type: deployment
 spec:
   replicas: {{ .Values.database.replicaCount }}
   selector:
     matchLabels:
-      app: mariadb
+      app: {{ .Values.database.appLabel }}
   template:
     metadata:
       labels:
-        app: mariadb
+        app: {{ .Values.database.appLabel }}
+        type: container
     spec:
       containers:
       - name:  {{ .Values.database.mariadb.name }}-container

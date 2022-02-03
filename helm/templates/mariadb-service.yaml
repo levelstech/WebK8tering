@@ -3,6 +3,9 @@ kind: Service
 metadata:
   name: {{ .Values.database.mariadb.name }}-service
   namespace: {{ .Values.database.namespace }}
+  labels:
+    app: {{ .Values.database.appLabel }}
+    type: secret
 spec:
   type: ClusterIP
   ports:
@@ -10,4 +13,4 @@ spec:
     port: {{ .Values.database.mariadb.clusterPort }}
     targetPort: {{ .Values.database.mariadb.port}}
   selector:
-    app: mariadb
+    app: {{ .Values.database.appLabel }}

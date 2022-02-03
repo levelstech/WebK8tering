@@ -3,5 +3,8 @@ kind: Namespace
 metadata:
   creationTimestamp: null
   name: {{ .Values.restapi.namespace }}
+  labels:
+    app: {{ .Values.restapi.appLabel }}
+    type: namespace
 spec: {}
 status: {}

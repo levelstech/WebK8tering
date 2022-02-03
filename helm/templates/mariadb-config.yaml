@@ -4,7 +4,8 @@ metadata:
   name: {{ .Values.database.mariadb.name }}-config
   namespace: {{ .Values.database.namespace }}
   labels:
-    app: mariadb
+    app: {{ .Values.database.appLabel }}
+    type: config
 data:
   MARIADB_DATABASE: mariadb
   MARIADB_USER: {{ .Values.database.mariadb.username }}

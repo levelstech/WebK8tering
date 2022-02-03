@@ -4,7 +4,8 @@ metadata:
   name: {{ .Values.restapi.nodejs.name }}-config
   namespace: {{ .Values.restapi.namespace }}
   labels:
-    app: mariadb
+    app: api
+    type: config
 data:
   MARIADB_DATABASE: {{ .Values.database.mariadb.databaseName }}
   MARIADB_USER: {{ .Values.database.mariadb.username }}

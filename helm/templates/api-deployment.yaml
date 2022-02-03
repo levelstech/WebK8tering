@@ -4,16 +4,18 @@ metadata:
   name: {{ .Values.restapi.nodejs.name }}-deployment
   namespace: {{ .Values.restapi.namespace }}
   labels:
-    app:  api
+    app:  {{ .Values.restapi.appLabel }}
+    type: deployment
 spec:
   replicas: {{ .Values.restapi.replicaCount }}
   selector:
     matchLabels:
-      app: api
+      app: {{ .Values.restapi.appLabel }}
   template:
     metadata:
       labels:
-        app: api
+        app: {{ .Values.restapi.appLabel }}
+        type: container
     spec:
       containers:
         - name: {{ .Values.restapi.nodejs.name }}-container

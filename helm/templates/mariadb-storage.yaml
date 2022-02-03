@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.database.mariadb.name }}-pv-volume-database
   labels:
     type: local
-    app: mariadb
+    app: {{ .Values.database.appLabel }}
 spec:
   storageClassName: microk8s-hostpath
   claimRef:
@@ -23,7 +23,8 @@ metadata:
   name: {{ .Values.database.mariadb.name }}-pv-claim
   namespace: {{ .Values.database.namespace }}
   labels:
-    app: mariadb
+    app: {{ .Values.database.appLabel }}
+    type: secret
 spec:
   storageClassName: microk8s-hostpath
   accessModes:

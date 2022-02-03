@@ -4,16 +4,18 @@ metadata:
   name:  {{ .Values.ui.react.name }}-deployment
   namespace: {{ .Values.ui.namespace}}
   labels:
-    app:  ui
+    app: ui
+    type: deployment
 spec:
   replicas: {{ .Values.ui.replicaCount }}
   selector:
     matchLabels:
-      app: ui
+      app: {{ .Values.ui.appLabel }}
   template:
     metadata:
       labels:
-        app:  ui
+        app: {{ .Values.ui.appLabel }}
+        type: container
     spec:
       containers:
       - name:  {{ .Values.ui.react.name }}-container

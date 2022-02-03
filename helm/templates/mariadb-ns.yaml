@@ -3,5 +3,8 @@ kind: Namespace
 metadata:
   creationTimestamp: null
   name: {{ .Values.database.namespace }}
+  labels:
+    app: {{ .Values.database.appLabel }}
+    type: namespace
 spec: {}
 status: {}
