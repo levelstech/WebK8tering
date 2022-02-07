@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ .Values.restapi.nodejs.name }}-config
-  namespace: {{ .Values.restapi.namespace }}
+  # namespace: {{ .Values.restapi.namespace }}
   labels:
     app: api
     type: config

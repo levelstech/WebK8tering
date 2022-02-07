@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.database.mariadb.name }}-deployment
-  namespace: {{ .Values.database.namespace }}
+  # namespace: {{ .Values.database.namespace }}
   labels:
     app: {{ .Values.database.appLabel }}
     type: deployment

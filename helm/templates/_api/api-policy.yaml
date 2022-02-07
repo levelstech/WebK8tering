@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
   name: {{ .Values.restapi.nodejs.name }}-policy
-  namespace: {{ .Values.restapi.namespace }}
+  # namespace: {{ .Values.restapi.namespace }}
 spec:
   podSelector:
     matchLabels:

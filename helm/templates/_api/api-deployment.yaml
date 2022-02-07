@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.restapi.nodejs.name }}-deployment
-  namespace: {{ .Values.restapi.namespace }}
+  # namespace: {{ .Values.restapi.namespace }}
   labels:
     app:  {{ .Values.restapi.appLabel }}
     type: deployment

@@ -16,6 +16,7 @@ database:
     password: aaaa
     port: 3306
     clusterPort: 8306
+    filepath: "/opt/mariadb/data"
 
 restapi:
   appLabel: api

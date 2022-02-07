@@ -20,3 +20,10 @@ docker tag node_api:v1 localhost:32000/node_api:v1
 docker push localhost:32000/node_api:v1
 
 helm3 install ./helm --generate-name
+
+enable rbac
+enable dns
+enable ingress
+enable registry
+emable helm3
+enable ingress
