@@ -1,7 +1,10 @@
 'use strict';
 
 var express = require('express');
-var mariadb = require('mariadb');
+var mariadb = require('mariadb')
+var server = require('http').createServer(app); 
+var sock = require('socket.io')(server); 
+var clickCount = 0;
  
 const pool = mariadb.createPool({
    host: process.env.MARIADB_SERVICE_PORT_8306_TCP_ADDR,
@@ -30,20 +33,9 @@ const pool = mariadb.createPool({
 //       if (conn) return conn.end();
 //    }
 // }
+
 var app = express();
 
-const bodyParser = require("body-parser");
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-
-const db = require("./db.js");
-
-db.sequelize.sync();
-
-app.get("/", (req, res) => {
-  res.json({ message: "MariaDB connection set." });
-});
 
 // app.set("port", process.env.PORT || 3306);
 
@@ -92,10 +84,6 @@ app.get("/", (req, res) => {
 // //   initdb();
 // })
 
-var server = require('http').createServer(app); 
-var sock = require('socket.io')(server); 
-var clickCount = 0;
-
 app.use(express.static(__dirname)); 
 
 app.get('/', function(req, res,next) {  
@@ -115,5 +103,5 @@ sock.on('connection', function(client) {
 });
 
 server.listen(3306, function(){
-  console.log('listening on port 3306');
-})
+  console.log('listening on localhost:3306');
+}); 

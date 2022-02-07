@@ -1,23 +1,22 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import logo from './images/logo.png';
+import Dashboard from './components/Dashboard';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="app">
+      <header className="app-header">
+        <div>
+          <img className="float-left" src={logo} alt="logo" />
+          <div className="float-right center padding-10">
+            <p className="title-text align-left">TODO</p>
+            <p className="sub-title-text align-left">A Simple MariaDB CRUD Demo</p>
+          </div>
+          <div style={{clear: "both"}} />
+        </div>
       </header>
+      <Dashboard />
     </div>
   );
 }
