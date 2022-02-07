@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.restapi.nodejs.name }}-deployment
+  namespace: {{ .Values.restapi.namespace }}
+  labels:
+    app:  {{ .Values.restapi.appLabel }}
+    type: deployment
+spec:
+  replicas: {{ .Values.restapi.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.restapi.appLabel }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.restapi.appLabel }}
+        type: container
+    spec:
+      containers:
+        - name: {{ .Values.restapi.nodejs.name }}-container
+          image: {{ .Values.restapi.nodejs.image }}
+          ports:
+            - containerPort: {{ .Values.restapi.nodejs.port }}
+          env:
+          - name: MARIADB_DATABASE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.restapi.nodejs.name }}-config
+                key: MARIADB_DATABASE
+          - name: MARIADB_USER
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.restapi.nodejs.name }}-config
+                key: MARIADB_USER
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.restapi.nodejs.name }}-secret
+                key: MYSQL_PASSWORD

@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name:  {{ .Values.ui.react.name }}-ingress
+  namespace: {{ .Values.ui.namespace }}
+  labels:
+    app: {{ .Values.ui.appLabel }}
+    type: secret
+
+spec:
+  tls:
+  - hosts: 
+    - {{ .Values.ui.react.hostname }}
+    secretName: ui-tls-secret
+  rules:
+  - host: {{ .Values.ui.react.hostname }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.ui.react.name }}-service
+            port:
+              number: {{ .Values.ui.react.clusterPort }}
