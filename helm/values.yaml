@@ -16,13 +16,14 @@ database:
     password: aaaa
     port: 3306
     clusterPort: 8306
+    filepath: "/opt/mariadb/data"
 
 restapi:
   appLabel: api
   namespace: restapi
   replicaCount: 3
   nodejs:
-    image: localhost:32000/node_api:v1
+    image: localhost:32000/node_api:v4
     name: nodejs
     hostname: node-api.com
     port: 5000
@@ -33,11 +34,12 @@ ui:
   namespace: ui
   replicaCount: 3
   react:
-    image: localhost:32000/react-ui:v1
+    image: localhost:32000/react-ui:v2
     name: react
     hostname: react-ui.com
     port: 80
     clusterPort: 8080
+    nodePort: 32080
 
 
 replicaCount: 1

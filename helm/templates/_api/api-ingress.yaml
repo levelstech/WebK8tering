@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name:  {{ .Values.restapi.nodejs.name }}-ingress
+  labels:
+    app: {{ .Values.restapi.appLabel }}
+    type: secret
+
+spec:
+  defaultBackend:
+    service:
+      name: {{ .Values.restapi.nodejs.name }}-service
+      port:
+        number: {{ .Values.restapi.nodejs.clusterPort }}
+  tls:
+  - hosts: 
+    - {{ .Values.restapi.nodejs.hostname }}
+    secretName: restapi-tls-secret
+  rules:
+  - host: {{ .Values.restapi.nodejs.hostname }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.restapi.nodejs.name }}-service
+            port:
+              number: {{ .Values.restapi.nodejs.clusterPort }}

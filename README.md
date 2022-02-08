@@ -1,22 +1,60 @@
-# How to run the application
 
-# First the docker images of ui and api have to be pushed to the (local) docker repo
+microk8s status
+...
+addons:
+  enabled:
+    dns                  # CoreDNS
+    ha-cluster           # Configure high availability on the current node
+    helm3                # Helm 3 - Kubernetes package manager
+    ingress              # Ingress controller for external access
+    registry             # Private image registry exposed on localhost:32000
+    storage              # Storage class; allocates storage from host directory
+...
 
-# Before running dock, unlock docker.sock
-sudo setfacl --modify user:ghasem:rw /var/run/docker.sock
+helm3 install MyHelmChart helm/
 
-# In k8s-services/react-ui
-docker build -t react-ui:v1 .
+Install notes
 
-docker tag react-ui:v1 localhost:32000/react-ui:v1
+COMPONENTS:
+1. Database
+2. API
+3. UI
+4. Utils
 
-docker push localhost:32000/react-ui:v1
+Init Variables 
+  export DATABASE_IP=$(kubectl get svc {{ .Values.database.mariadb.name }}-service |  awk '{ print $3  }' | sed -n '2 p')
+  export DATABASE_PORT={{ .Values.database.mariadb.clusterPort }}
+  export API_IP=$(kubectl get svc {{ .Values.restapi.nodejs.name }}-service |  awk '{ print $3  }' | sed -n '2 p')
+  export API_PORT={{ .Values.restapi.nodejs.clusterPort }}
+  export UI_IP=$(kubectl get svc {{ .Values.ui.react.name }}-service |  awk '{ print $3  }' | sed -n '2 p')
+  export UI_PORT={{ .Values.ui.react.clusterPort }}
 
-# In k8s-services/api
-docker build -t node_api:v1 .
+  mkdir -p {{ .Values.database.mariadb.filepath }}
 
-docker tag node_api:v1 localhost:32000/node_api:v1
+  echo '127.0.0.1 {{ .Values.restapi.nodejs.hostname }}' | sudo tee -a /etc/hosts
+  echo '127.1.1.1 {{ .Values.ui.react.hostname }}' | sudo tee -a /etc/hosts
 
-docker push localhost:32000/node_api:v1
+Test DB connections
+  mysql -u root -p{{ .Values.database.mariadb.rootPassword }} -h $DATABASE_IP -P $DATABASE_PORT {{ .Values.database.mariadb.databaseName }} 
 
-helm3 install ./helm --generate-name
+Test network policy correct
+  kubectl run --rm -i -t --image=mysql --image-pull-policy=IfNotPresent --labels="app=api" test -- sh
+Test network policy incorrect
+  kubectl run --rm -i -t --image=mysql --image-pull-policy=IfNotPresent test -- sh
+
+Test API
+  curl $API_IP:$API_PORT -X GET
+  curl $API_IP:$API_PORT -X POST
+  curl $API_IP:$API_PORT -X DELETE
+
+Test API Ingress
+  curl {{ .Values.restapi.nodejs.hostname }} -X
+
+Test UI
+  curl $UI_IP:$UI_PORT -X GET
+
+Test UI Node port
+  curl localhost:{{ .Values.ui.react.nodePort }} -X GET
+
+Test UI Ingress
+  curl {{ .Values.ui.react.hostname }} -X GET

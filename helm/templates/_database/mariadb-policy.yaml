@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ .Values.database.mariadb.name }}-policy
+  # namespace: {{ .Values.database.namespace }}
+spec:
+  podSelector:
+    matchLabels:
+      app: {{ .Values.database.appLabel }}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: {{ .Values.restapi.appLabel }}

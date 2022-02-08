@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.database.mariadb.name }}-deployment
+  # namespace: {{ .Values.database.namespace }}
+  labels:
+    app: {{ .Values.database.appLabel }}
+    type: deployment
+spec:
+  replicas: {{ .Values.database.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.database.appLabel }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.database.appLabel }}
+        type: container
+    spec:
+      containers:
+      - name:  {{ .Values.database.mariadb.name }}-container
+        image:  {{ .Values.database.mariadb.image }}
+        imagePullPolicy: "IfNotPresent"
+        ports:
+          - containerPort: {{ .Values.database.mariadb.port }}
+        env:
+        - name: MARIADB_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.database.mariadb.name }}-config
+              key: MARIADB_DATABASE
+        - name: MARIADB_USER
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.database.mariadb.name }}-config
+              key: MARIADB_USER
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.database.mariadb.name }}-secret
+              key: MYSQL_PASSWORD
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.database.mariadb.name }}-secret
+              key: MYSQL_ROOT_PASSWORD
+        volumeMounts:
+          - mountPath: /var/lib/mariadb/data
+            name: {{ .Values.database.mariadb.name }}-data
+      volumes:
+        - name: {{ .Values.database.mariadb.name }}-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.database.mariadb.name }}-pv-claim
+        
