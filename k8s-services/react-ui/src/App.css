@@ -26,6 +26,15 @@
 
 .App-link {
   color: #61dafb;
+  font-size: 40px;
+  background-color:#282c34;
+  border-width: 0 0 2px 0;
+  margin: 20px;
+  display: inline-block;
+}
+.App-link:hover {
+  cursor: pointer;
+  color: white;
 }
 
 @keyframes App-logo-spin {
