@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 import Counter from './Counter';
 
@@ -9,6 +9,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <Counter/>
       </header>
+      <Dashboard />
     </div>
   );
 }

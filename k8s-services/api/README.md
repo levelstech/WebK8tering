@@ -1,49 +1,119 @@
-# Software Containerization
+# TODO - Node.js API
 
-## Docker + REST API setup
+This Node.js project uses the MariaDB Node.js connector directly to connect to and communicate to a MariaDB database instance.
 
-# Give the right permissions to docker to set up
-```sudo setfacl --modify user:<your_username>:rw /var/run/docker.sock```
+1. [Requirements](#requirements)
+2. [Getting started with the app](#getting-started)
+    1. [Configure the code](#configure-code)
+    2. [Build the code](#build-code)
+    3. [Run the app](#run-app)
 
-# Build the docker
-```docker build -t software_containerization_docker .```
+## Requirements <a name="requirements"></a>
 
-# Run the docker, which starts with 5000 as default port which is hardcoded in Dockerfile and server.js
-```docker run -p 5000:5000 -d software_containerization_docker```
+This sample was created using the following techologies and they must be installed before proceeding.
 
-# Run the docker with a custom port of choice 
-```docker run -e PORT=<port> -p <port>:<port> -d software_containerization_docker```
+* [Node.js (v. 12+)](https://nodejs.org/docs/latest-v12.x/api/index.html)
+* [NPM (v. 6+)](https://docs.npmjs.com/)
 
-# Run the HTTP request calls
+## Getting started with the app <a name="getting-started"></a>
 
-GET call
+### Configure the code <a name="configure-code"></a>
 
-```curl -i http://localhost:/```
+Configure the MariaDB connection by [adding an .env file to the Node.js project](https://github.com/mariadb-corporation/mariadb-connector-nodejs/blob/master/documentation/promise-api.md#security-consideration).
 
-GET with ID call 
+Example implementation:
 
-```curl -i http://localhost:<5000>/<id_number>```
+```
+DB_HOST=<host_address>
+DB_PORT=<port_number>
+DB_USER=<username>
+DB_PASS=<password>
+DB_NAME=todo
+```
 
-POST call
+**Configuring db.js**
 
-```curl -i -X POST http://localhost:<5000>```
+The environmental variables from `.env` are used within the [db.js](src/db.js) for the MariaDB Node.js Connector configuration pool settings:
 
-PUT call
+```javascript
+var mariadb = require('mariadb');
+require('dotenv').config();
 
-```curl -i -X PUT http://localhost:<5000>```
+const pool = mariadb.createPool({
+    host: process.env.DB_HOST, 
+    user: process.env.DB_USER, 
+    password: process.env.DB_PASS,
+    port: process.env.DB_PORT,
+    database: process.env.DB_NAME,
+    multipleStatements: true,
+    connectionLimit: 5
+});
+```
 
-DELETE call
+**Configuring db.js for the MariaDB cloud database service [SkySQL](https://mariadb.com/products/skysql/)**
 
-```curl -i -X DELETE http://localhost:<5000>```
+MariaDB SkySQL requires SSL additions to connection. It's as easy as 1-2-3 (steps below).
 
-# To update the docker settings or server.js code do:
+```javascript
+var mariadb = require('mariadb');
+require('dotenv').config();
 
-```docker ps```
+// 1.) Access the Node File System package
+const fs = require("fs");
 
-find the container id you want to stop
+// 2.) Retrieve the Certificate Authority chain file (wherever you placed it - notice it's just in the Node project root here)
+const serverCert = [fs.readFileSync("skysql_chain.pem", "utf8")];
 
-```docker stop <container_id>```
+var pools = [
+  mariadb.createPool({
+    host: process.env.DB_HOST, 
+    user: process.env.DB_USER, 
+    password: process.env.DB_PASS,
+    port: process.env.DB_PORT,
+    database: process.env.DB_NAME,
+    connectionLimit: 5,
+    // 3.) Add an "ssl" property to the connection pool configuration, using the serverCert const defined above
+    ssl: {
+      ca: serverCert
+    }
+  })
+];
+```
 
-or if you want to stop all docker containers
+### Build the code <a name="build-code"></a>
 
-```docker stop $(docker ps -a -q)```
+Once you have retrieved a copy of the code you're ready to build and run the project! However, before running the code it's important to point out that the application uses several Node Packages.
+
+Executing the CLI command 
+
+```
+$ npm install
+```
+
+Doing this targets relative `package.json` file and [install all dependencies](https://docs.npmjs.com/downloading-and-installing-packages-locally).
+
+**IMPORTANT**: Be sure that the Node modules are installed for the [client](../../client). This can be done manually executing the following CLI command for [client](../../client):
+
+```
+$ npm install
+```
+
+### Run the app <a name="run-app"></a>
+
+Once you've pulled down the code and have verified that all of the required Node packages are installed you're ready to run the application! 
+
+1. Execute the following CLI command 
+
+```bash
+$ npm start
+```
+
+The following steps also exist within the ["Build and run"](../../#build-and-run-the-app-) section of the root README, and are for startin the React.js project once this API project has been started.
+
+2. Navigate to the [../../client](client) folder and execute the following CLI command to start the React.js application.
+
+```bash 
+$ npm start
+```
+
+3. Open a browser window and navigate to http://localhost:3000.
