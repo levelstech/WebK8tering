@@ -23,7 +23,7 @@ restapi:
   namespace: restapi
   replicaCount: 3
   nodejs:
-    image: localhost:32000/node_api:v4
+    image: localhost:32000/node_api:v1
     name: nodejs
     hostname: node-api.com
     port: 5000
@@ -33,8 +33,12 @@ ui:
   appLabel: ui
   namespace: ui
   replicaCount: 3
+  canary:
+    enabled: true
+    image: localhost:32000/react-ui:v3
+    repliceCount: 1
   react:
-    image: localhost:32000/react-ui:v2
+    image: localhost:32000/react-ui:v1
     name: react
     hostname: react-ui.com
     port: 80

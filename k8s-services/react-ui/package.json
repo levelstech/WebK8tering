@@ -1,33 +1,28 @@
 {
-  "name": "client",
+  "name": "react-ui",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
-<<<<<<< HEAD
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.25.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "5.0.0",
     "web-vitals": "^2.1.4"
-=======
-    "@testing-library/user-event": "^7.2.1",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
-    "react-modal": "^3.12.1",
-    "react-scripts": "^5.0.0"
->>>>>>> main
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider --expose-gc --max_old_space_size=12000 start start",
-    "build": "react-scripts build",
+    "start": "react-scripts start",
+    "build": "BUILD_PATH='./dist/out' react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [
@@ -40,6 +35,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "http://localhost:3000"
+  }
 }

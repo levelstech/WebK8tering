@@ -1,0 +1,25 @@
+{{ if .Values.ui.canary.enabled }}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  {{ .Values.ui.react.name }}-canary-deployment
+  labels: &labels
+    app: {{ .Values.ui.appLabel }}
+    type: deployment
+    version: canary
+spec:
+  replicas: {{ .Values.ui.canary.replicaCount }}
+  selector:
+    matchLabels: *labels
+  template:
+    metadata:
+      labels: *labels
+    spec:
+      containers:
+      - name:  {{ .Values.ui.react.name }}-canary-container
+        image:  {{ .Values.ui.canary.image }}
+        ports:
+        - containerPort:  {{ .Values.ui.react.port }}
+
+{{ end }}

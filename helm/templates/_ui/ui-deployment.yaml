@@ -2,19 +2,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name:  {{ .Values.ui.react.name }}-deployment
-  labels:
-    app: ui
+  labels: &labels
+    app: {{ .Values.ui.appLabel }}
     type: deployment
+    version: real
 spec:
   replicas: {{ .Values.ui.replicaCount }}
   selector:
-    matchLabels:
-      app: {{ .Values.ui.appLabel }}
+    matchLabels: *labels
   template:
     metadata:
-      labels:
-        app: {{ .Values.ui.appLabel }}
-        type: container
+      labels: *labels
     spec:
       containers:
       - name:  {{ .Values.ui.react.name }}-container
