@@ -12,7 +12,7 @@ Init Variables
   export UI_IP=$(kubectl get svc {{ .Values.ui.react.name }}-service |  awk '{ print $3  }' | sed -n '2 p')
   export UI_PORT={{ .Values.ui.react.clusterPort }}
   
-  mkdir -p {{ .Values.database.mariadb.filepath }}
+  sudo mkdir -p {{ .Values.database.mariadb.filepath }}
 
   echo '127.0.0.1 {{ .Values.restapi.nodejs.hostname }}' | sudo tee -a /etc/hosts
   echo '127.1.1.1 {{ .Values.ui.react.hostname }}' | sudo tee -a /etc/hosts
