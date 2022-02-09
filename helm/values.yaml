@@ -34,7 +34,7 @@ ui:
   namespace: ui
   replicaCount: 3
   canary:
-    enabled: true
+    enabled: false
     image: localhost:32000/react-ui:v3
     repliceCount: 1
   react:

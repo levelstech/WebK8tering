@@ -6,3 +6,4 @@ new_num=$(($v_num+1))
 docker build -t $docker_name:v$new_num .
 docker tag $docker_name:v$new_num localhost:32000/$docker_name:v$new_num
 docker push localhost:32000/$docker_name:v$new_num
+
